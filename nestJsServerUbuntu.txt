@@ -26,5 +26,9 @@ RUN npm i -g @nestjs/cli
 RUN apt-get install openssh-server -y
 RUN apt-get install net-tools
 
+#-------allow port------------------
+EXPOSE 3000 3000
+EXPOSE 22 22
+
 #-------check image in docker-------
 #CMD "done image build"
