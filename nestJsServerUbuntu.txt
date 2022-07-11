@@ -1,0 +1,26 @@
+#--------creating an image of ubuntu
+FROM ubuntu
+
+#--------user proper tagging of maintainer------
+MAINTAINER sk_mishu <satyajitoo7@gmail.com>
+
+#--------installing necessary tools------
+RUN apt-get update && apt-get upgrade -y
+#------->git
+RUN apt-get install -y git-core curl build-essential openssl libssl-dev
+#------->nodejs
+ENV NODE_VERSION=16.16.0
+RUN apt install -y curl
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+ENV NVM_DIR=/root/.nvm
+RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
+ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+RUN node --version
+RUN npm --version
+#------>nestjs
+RUN npm i -g @nestjs/cli
+
+#-------check image in docker-------
+CMD "done image build"
