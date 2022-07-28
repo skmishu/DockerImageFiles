@@ -1,0 +1,35 @@
+# specify the OS from docker hub, it will install the ubuntu OS in the virtual machine (docker container)
+FROM Ubuntu
+
+
+#-----> basic tools installation using OS terminal by docker <-----
+# after the OS installation we need to update and upgrade the OS, use RUN command to execute a command inside container after the installation is done
+RUN apt-get update && apt-get upgrade
+RUN apt-get install python
+RUN apt-get install git
+RUN apt-get install net-tools
+
+# to install flask framework in the container
+RUN pip install flask
+RUN pip install flask-mysql
+
+
+#-----> copy any files from external directory to container directory <-----
+COPY . /opt/myApplicationDirectory
+
+
+#----->
+
+
+#-----> setup environment variable so that after installation 'myApplication' can find the variable inside the container <-----
+
+
+#-----> expose the required port <-----
+EXPOSE 4000:4000
+
+
+#-----> create entry point application so that container run the 'myApplication' in startup <-----
+ENTRYPOINT FLASK_APP=/opt/source-code-path/myApplication.py flask run
+
+
+# docker build: docker build DockerFile -t sk/my-application-tag
